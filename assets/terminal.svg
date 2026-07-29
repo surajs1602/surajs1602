@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" width="820" height="380"
+     font-family="'Fira Code','JetBrains Mono','Cascadia Code','DejaVu Sans Mono',Consolas,monospace">
+  <!--
+    Animated terminal for surajs1602/surajs1602
+    Typing effect = per-line clipPath rect translated in steps(<charCount>),
+    so exactly one character is revealed per step. A caret rect shares the
+    same animation, so it walks along with the text like a real shell.
+    Layout assumes a 9px advance at font-size 15 (0.6em); every <text> is
+    pinned with textLength so the clip stays aligned in any monospace font.
+  -->
+  <style>
+    .win    { fill:#010409; stroke:#00FF41; stroke-opacity:.35; stroke-width:1.5; }
+    .bar    { fill:#0d1117; }
+    .title  { fill:#8B949E; font-size:13px; }
+    .prompt { fill:#00FF41; font-weight:600; }
+    .cmd    { fill:#E6EDF3; }
+    .out    { fill:#7EE787; }
+    .dim    { fill:#8B949E; }
+    .line   { font-size:15px; }
+    .cr, .cur { fill:#00FF41; }
+
+    /* screen: hold the finished frame, blank out, restart */
+    .screen { animation: scr 18s linear infinite; }
+    @keyframes scr { 0%,92% { opacity:1 } 95.5%,100% { opacity:0 } }
+
+    /* ── typing masks ─────────────────────────────────────────── */
+    .k1 { animation: k1 18s linear infinite; }
+    .k2 { animation: k2 18s linear infinite; }
+    .k3 { animation: k3 18s linear infinite; }
+    .k4 { animation: k4 18s linear infinite; }
+    .k5 { animation: k5 18s linear infinite; }
+    .k6 { animation: k6 18s linear infinite; }
+    .k7 { animation: k7 18s linear infinite; }
+    .k8 { animation: k8 18s linear infinite; }
+
+    @keyframes k1 { 0%,2.8%   { transform:translateX(-72px);  animation-timing-function:steps(8,start)  }
+                    5.4%,95.9%{ transform:translateX(0)      } 96%,100%{ transform:translateX(-72px)  } }
+    @keyframes k2 { 0%,6.7%   { transform:translateX(-306px); animation-timing-function:steps(34,start) }
+                    8.6%,95.9%{ transform:translateX(0)      } 96%,100%{ transform:translateX(-306px) } }
+    @keyframes k3 { 0%,11.1%  { transform:translateX(-135px); animation-timing-function:steps(15,start) }
+                    16.1%,95.9%{transform:translateX(0)      } 96%,100%{ transform:translateX(-135px) } }
+    @keyframes k4 { 0%,17.8%  { transform:translateX(-252px); animation-timing-function:steps(28,start) }
+                    19.4%,95.9%{transform:translateX(0)      } 96%,100%{ transform:translateX(-252px) } }
+    @keyframes k5 { 0%,20.6%  { transform:translateX(-405px); animation-timing-function:steps(45,start) }
+                    22.5%,95.9%{transform:translateX(0)      } 96%,100%{ transform:translateX(-405px) } }
+    @keyframes k6 { 0%,23.6%  { transform:translateX(-306px); animation-timing-function:steps(34,start) }
+                    25.3%,95.9%{transform:translateX(0)      } 96%,100%{ transform:translateX(-306px) } }
+    @keyframes k7 { 0%,28.9%  { transform:translateX(-180px); animation-timing-function:steps(20,start) }
+                    35.6%,95.9%{transform:translateX(0)      } 96%,100%{ transform:translateX(-180px) } }
+    @keyframes k8 { 0%,37.2%  { transform:translateX(-369px); animation-timing-function:steps(41,start) }
+                    39.4%,95.9%{transform:translateX(0)      } 96%,100%{ transform:translateX(-369px) } }
+
+    /* ── carets: same walk as the mask + visible only while typing ─ */
+    .cr1 { animation: k1 18s linear infinite, v1 18s linear infinite; }
+    .cr3 { animation: k3 18s linear infinite, v3 18s linear infinite; }
+    .cr7 { animation: k7 18s linear infinite, v7 18s linear infinite; }
+    @keyframes v1 { 0%,2.7%  { opacity:0 } 2.8%,5.4%  { opacity:1 } 5.5%,100%  { opacity:0 } }
+    @keyframes v3 { 0%,11%   { opacity:0 } 11.1%,16.1%{ opacity:1 } 16.2%,100% { opacity:0 } }
+    @keyframes v7 { 0%,28.8% { opacity:0 } 28.9%,35.6%{ opacity:1 } 35.7%,100% { opacity:0 } }
+
+    /* ── final idle prompt + blinking block cursor ─────────────── */
+    .l9  { animation: k9 18s linear infinite; }
+    @keyframes k9 { 0%,42.1% { opacity:0 } 42.2%,100% { opacity:1 } }
+    .cur { animation: blink 1.06s steps(1) infinite; }
+    @keyframes blink { 0%,50% { opacity:1 } 50.01%,100% { opacity:0 } }
+  </style>
+
+  <defs>
+    <clipPath id="c1"><rect class="k1" x="0" y="-13"  width="72"  height="19"/></clipPath>
+    <clipPath id="c2"><rect class="k2" x="0" y="13"   width="306" height="19"/></clipPath>
+    <clipPath id="c3"><rect class="k3" x="0" y="51"   width="135" height="19"/></clipPath>
+    <clipPath id="c4"><rect class="k4" x="0" y="77"   width="252" height="19"/></clipPath>
+    <clipPath id="c5"><rect class="k5" x="0" y="101"  width="405" height="19"/></clipPath>
+    <clipPath id="c6"><rect class="k6" x="0" y="125"  width="306" height="19"/></clipPath>
+    <clipPath id="c7"><rect class="k7" x="0" y="163"  width="180" height="19"/></clipPath>
+    <clipPath id="c8"><rect class="k8" x="0" y="189"  width="369" height="19"/></clipPath>
+  </defs>
+
+  <rect class="win" x="6" y="6" width="808" height="368" rx="10"/>
+  <path class="bar" d="M6 16 a10 10 0 0 1 10 -10 h788 a10 10 0 0 1 10 10 v22 h-808 z"/>
+  <circle cx="28" cy="22" r="6" fill="#FF5F56"/>
+  <circle cx="48" cy="22" r="6" fill="#FFBD2E"/>
+  <circle cx="68" cy="22" r="6" fill="#27C93F"/>
+  <text class="title" x="410" y="26" text-anchor="middle">suraj@github: ~ — bash</text>
+
+  <g class="screen" transform="translate(28,74)">
+
+    <g clip-path="url(#c1)">
+      <text class="line" x="0" y="0" textLength="72" lengthAdjust="spacing"><tspan class="prompt">$</tspan><tspan class="cmd"> whoami</tspan></text>
+    </g>
+    <rect class="cr cr1" x="72" y="-13" width="9" height="17"/>
+
+    <g clip-path="url(#c2)">
+      <text class="line out" x="0" y="26" textLength="306" lengthAdjust="spacing">Suraj — Software Engineer · 3+ yrs</text>
+    </g>
+
+    <g clip-path="url(#c3)">
+      <text class="line" x="0" y="64" textLength="135" lengthAdjust="spacing"><tspan class="prompt">$</tspan><tspan class="cmd"> cat about.txt</tspan></text>
+    </g>
+    <rect class="cr cr3" x="135" y="51" width="9" height="17"/>
+
+    <g clip-path="url(#c4)">
+      <text class="line out" x="0" y="90" textLength="252" lengthAdjust="spacing">Backend · Cloud · Agentic AI</text>
+    </g>
+    <g clip-path="url(#c5)">
+      <text class="line out" x="0" y="114" textLength="405" lengthAdjust="spacing">MSc Business Analytics — University of Galway</text>
+    </g>
+    <g clip-path="url(#c6)">
+      <text class="line" x="0" y="138" textLength="306" lengthAdjust="spacing"><tspan class="out">Based in Ireland </tspan><tspan class="dim">(Galway / Dublin)</tspan></text>
+    </g>
+
+    <g clip-path="url(#c7)">
+      <text class="line" x="0" y="176" textLength="180" lengthAdjust="spacing"><tspan class="prompt">$</tspan><tspan class="cmd"> ls ~/current-focus</tspan></text>
+    </g>
+    <rect class="cr cr7" x="180" y="163" width="9" height="17"/>
+
+    <g clip-path="url(#c8)">
+      <text class="line out" x="0" y="202" textLength="369" lengthAdjust="spacing">llm-apps/   rag-pipelines/   mcp-tooling/</text>
+    </g>
+
+    <g class="l9">
+      <text class="line" x="0" y="240" textLength="9" lengthAdjust="spacing"><tspan class="prompt">$</tspan></text>
+      <rect class="cur" x="18" y="227" width="9" height="17"/>
+    </g>
+
+  </g>
+</svg>
