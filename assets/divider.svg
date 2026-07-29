@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 16" width="1000" height="16">
+  <!-- Animated section divider: a faint rail with a glowing beam sweeping across it. -->
+  <style>
+    .sweep { animation: sweep 6s linear infinite; }
+    @keyframes sweep { 0% { transform: translateX(-340px) } 100% { transform: translateX(1000px) } }
+    .node  { animation: pulse 2.6s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity:.3 } 50% { opacity:1 } }
+  </style>
+  <defs>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"   stop-color="#00FF41" stop-opacity="0"/>
+      <stop offset=".5"  stop-color="#00FF41" stop-opacity="1"/>
+      <stop offset="1"   stop-color="#00FF41" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-400%" width="200%" height="900%">
+      <feGaussianBlur stdDeviation="2.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <line x1="0" y1="8" x2="1000" y2="8" stroke="#00FF41" stroke-opacity=".22" stroke-width="1"/>
+  <rect class="sweep" x="0" y="7" width="340" height="2" fill="url(#beam)" filter="url(#glow)"/>
+  <path class="node" d="M500 4 L504 8 L500 12 L496 8 Z" fill="#00FF41" filter="url(#glow)"/>
+</svg>
